@@ -122,18 +122,21 @@ func current_step_time() -> float:
 
 func prepare_readme_capture() -> void:
 	snake = [
-		Vector2i(11, 12),
-		Vector2i(10, 12),
-		Vector2i(9, 12),
-		Vector2i(8, 12),
-		Vector2i(8, 11),
-		Vector2i(8, 10),
+		Vector2i(16, 8),
+		Vector2i(15, 8),
+		Vector2i(14, 8),
+		Vector2i(13, 8),
+		Vector2i(12, 8),
+		Vector2i(12, 9),
+		Vector2i(12, 10),
+		Vector2i(13, 10),
+		Vector2i(14, 10),
 	]
 	direction = Vector2i.RIGHT
 	pending_direction = direction
-	food = Vector2i(15, 12)
-	score = 7
-	best_score = 12
+	food = Vector2i(19, 8)
+	score = 14
+	best_score = 22
 	state = GameState.PLAYING
 	move_accumulator = 0.0
 	queue_redraw()
@@ -232,7 +235,7 @@ func draw_hud() -> void:
 	draw_string(
 		ThemeDB.fallback_font,
 		Vector2(360, 650),
-		"Enter to start",
+		playing_hint_text(),
 		HORIZONTAL_ALIGNMENT_LEFT,
 		-1,
 		20,
@@ -251,6 +254,14 @@ func draw_hud() -> void:
 			"Press Enter to restart",
 			"Your snake reached %d points." % score
 		)
+
+
+func playing_hint_text() -> String:
+	if state == GameState.PLAYING:
+		return "Speed Lv.%d" % (1 + int(score / 4))
+	if state == GameState.GAME_OVER:
+		return "Enter to retry"
+	return "Enter to start"
 
 
 func draw_overlay(title: String, subtitle: String, detail: String) -> void:
